@@ -59,6 +59,6 @@ void print_bits(uint16_t arg_word)
     msb_shifted = msb_32 << 16;
     result = msb_shifted | lsb_32;
 
-    printf("bit_merge returns: 0x%04x", result);
+    //printf("bit_merge returns: 0x%04x", result);
 	return result;
  }
