@@ -1,0 +1,29 @@
+Lab01 Lab Questions:
+
+
+Understand which IO pins are being utilized and what is being done in loop(), and implement the
+setup() accordingly. You will need to use the function pinMode().
+Q1: 
+
+Q2: lower resistor -> brighter light
+
+Q3:	Part A: setting baudrate to 115200
+	Part B: reading incoming character from the Serial Monitor (one byte) and prints its ASCII code in decimal,
+	the delay is then being modified by the value of the character.
+	Higher values means more delay (slower blinking).
+	
+Q4:	&incoming gives the integer pointer of the variable incoming and (char*) casts the integer
+	pointer to a character pointer. We need to do that because the function 'readBytes'
+	expects characters.
+
+Q5:	They are being interpreted as ISO latin (8bit ASCII).
+
+Q6:	8
+
+Q7:	ASCII until 127.
+
+Q8:	We'd need to write '='.
+
+Q9:	
+
+Q10:		

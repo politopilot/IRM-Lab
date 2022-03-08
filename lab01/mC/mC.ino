@@ -5,16 +5,21 @@ int dl, mlt, incoming;
 int led_pins[10] = {12, 27, 33, 15, 32, 14, 22, 23};
 
 void setup() {
-   
+   int i=0;
    // setting some initial values
    dl = 10;
    mlt = 50;
    incoming = 0;
 
+   
+   for (i=0;i<8;i++)
+     pinMode(led_pins[i],OUTPUT);
+
+
    //_________________Begin - Part A_______________
-   /*
+   
    Serial.begin(115200);
-   */
+   
    //_________________End - Part A_________________
 }
 
@@ -24,16 +29,18 @@ void loop() {
    int i=0, j=0;
    
    //_________________Begin - Part B_______________
-   /*
+   
    if( Serial.available() )
    {
      // read into variable incoming
      Serial.readBytes(((char*)&incoming),1);
      Serial.println(incoming);
-     dl = incoming >> 4; 
-     mlt = incoming % (1<<4);
+     dl = incoming >> 4; // dividing by 16
+     mlt = incoming % (1<<4); // %16
+     Serial.println(dl);
+     Serial.println(mlt);
    }
-   */
+   
    //_________________End - Part B_________________
    
    
@@ -42,8 +49,10 @@ void loop() {
    // e.g. digitalWrite(1,LOW) means you set the digital pin 1 to LOW.
    for (j =0;j<8;j++)
    {
+
      for (i=0;i<8;i++)
        digitalWrite(led_pins[i],LOW);
+     
      digitalWrite(led_pins[j],HIGH);
      delay(dl*mlt);
    }   
