@@ -2,29 +2,38 @@
 // Sample the analog output of the hall sensor sensor
 // and print the value to the serial port
 
+int incoming = 0;
+int analogpin = A0;
 
 void setup() {
   // setup the serial connection
   Serial.begin(115200);
+  
+  // set pin A0 as INPUT
+  pinMode(analogpin, INPUT);
 }
 
 void loop() {
 
-
+  // calculation: V = 3.3*(digital reading)/4095 
   // initialize your parameters
+  float hlx_voltage = 0;
+  int val = 0;
 
-
-  // Check if the serial port is available and if a specific character is received from the serial port
-  // You can choose the character
-  if( )
+  // check if the serial port is available and if something is received from the serial port
+  if( Serial.available() )
   {
-
-    // Read the the hall sensor voltage
-
-
-
-    // Print the hall sensor voltage to the serial port
-
+	  incoming = Serial.read();
+    
+    if(incoming == 48) // comparing input with character "0", then read and print voltage
+    {
+      // Read analog pin A0
+		  val = analogRead(analogpin); 
+      // Print the digital sampled value to the serial port
+      Serial.print(val); // print
+  
+  }
+   
   }
  delay(20);
 
