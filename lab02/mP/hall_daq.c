@@ -13,6 +13,7 @@ int main()
     int n;
     int16_t pin_reading;
     float volt;
+    float quis_volt = 1.4406; // in V: measured ba taking the magnet away
 
     // char buffer
     char buf[4];
@@ -57,7 +58,7 @@ int main()
     }
 
 	// Convert the voltage value to magnetic field
-    
+
 
 
     // Close the serial port
