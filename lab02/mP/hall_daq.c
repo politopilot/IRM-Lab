@@ -51,40 +51,37 @@ int main()
     int d = 40;
      int step_size = 2;
 
-   do {
+    while (user_input != '0'){
         user_input = getchar();
         if (user_input != '\n' && user_input != '0') {
 
+        // write to the serial port to get a value
+        char arg = '0';
+        n = serialport_write(fd,((char*)&arg));
+        if(n == -1 )
+            printf("Unable to write the port\n");
+        
+        // Read the sensor value into the buffer from the serial port
+        n = serialport_read(fd, buf, 4, 500);
+        if(n == -1 )
+            printf("Unable to read the port \n");
 
+        // Convert the sensor value to a voltage
+        pin_reading = atoi(buf); // cast to integer
+        volt =  3.3 * (float)pin_reading / 4095;
 
+        //printf("%f\n", volt);      
+        // Convert the voltage value to magnetic field
+        float B = hall_sensor_get_field(volt, quis_volt);
+        printf("%d\t",d);
+        printf("%f\n",B); //mT
+        fprintf( stderr, "%d\t%f\n", d, B);
 
+        d -= step_size;
+        }
+        
+    }
 
-    // write to the serial port to get a value
-    char arg = '0';
-    n = serialport_write(fd,((char*)&arg));
-    if(n == -1 )
-        printf("Unable to write the port\n");
-    
-    // Read the sensor value into the buffer from the serial port
-    n = serialport_read(fd, buf, 4, 500);
-    if(n == -1 )
-        printf("Unable to read the port \n");
-
-    // Convert the sensor value to a voltage
-    pin_reading = atoi(buf); // cast to integer
-    volt =  3.3 * (float)pin_reading / 4095;
-
-    //printf("%f\n", volt);      
-    // Convert the voltage value to magnetic field
-    float B = hall_sensor_get_field(volt, quis_volt);
-    printf("%d\t",d);
-    printf("%f\n",B); //mT
-    fprintf( stderr, "%d\t%f\n", d, B);
-
-    d -= step_size;
-      }
-}
-while (user_input != '0');
 // Close the serial port
     serialport_close(fd);
     return 0;
