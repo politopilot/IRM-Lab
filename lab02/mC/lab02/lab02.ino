@@ -19,6 +19,9 @@ void loop() {
   // initialize your parameters
   float hlx_voltage = 0;
   int val = 0;
+  int sum = 0;
+  int avg_val = 0;
+  int i;
 
   // check if the serial port is available and if something is received from the serial port
   if( Serial.available() )
@@ -28,9 +31,16 @@ void loop() {
     if(incoming == 48) // comparing input with character "0", then read and print voltage
     {
       // Read analog pin A0
-		  val = analogRead(analogpin); 
+
+      for(i = 0; i < 50; i++){
+        val = analogRead(analogpin); 
+        sum = sum + val; 
+        }
+
+      avg_val = sum / 50;
       // Print the digital sampled value to the serial port
-      Serial.print(val); // print
+      Serial.print(avg_val); // print
+      sum = 0;
   
   }
    
