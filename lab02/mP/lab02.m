@@ -46,20 +46,48 @@ clc;
 % qui = importdata('quiescent_voltage.txt');
 % disp(mean(qui))
 
-D = 0.01;
-R = 0.02;
+%% Q3.4
 
 data = importdata('field_distance_backup.txt');
-z = data(:,1)
-B = data(:,2)
+n = 0.1;
+x = data(:,1)
+y = data(:,2)
+x_lin = 1./data(:,1).^n;
 
-fun = @(Br,z)(Br(1)*0.5*((D+z)./sqrt(R.^2+(D+z).^2)-(z./sqrt(R.^2+z.^2))));
-z0 = 176;
-Br = lsqcurvefit(fun,z0,z,B)
-
+figure
+plot(x_lin,y,'b*');
+grid on
 hold on
-plot(data(:,1), data(:,2));
-fplot(fun);
+
+parameter = lsqcurvefit(@f_lin, [0;0], x_lin, y) % 168 and -133 are the value we got at first time with [0;0]
+
+m = parameter(1)
+c = parameter(2)
+
+xfit = 14:2:40;
+xfit_lin = 1./xfit.^n;
+yfit_lin = f_lin(parameter, xfit_lin);
+
+plot(xfit_lin,yfit_lin,'r','linewidth',2); % plot of data and fit for linear case i.e. when 1/z^n
+hold off
+
+% plots with x = z
+figure
+plot(x,y,'b*');
+hold on
+yfit = parameter(1)*1000*0.5*f(xfit); % *1000 as we want it in mT, but values are veeery small, try multiplying with 100000000
+plot(xfit,yfit,'r','linewidth',2);
 
 
+function y = f(x)
+    D = 0.01;
+    R = 0.02;
+    y1 = ( (D+x)./sqrt(R^2+(D+x).^2) );
+    y2 = ( x./(sqrt(R^2+x.^2)) );
+    y = y1 - y2;
+end
+
+function y = f_lin(parameter,x)
+    y = parameter(1)*x+parameter(2);
+end
 
