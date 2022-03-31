@@ -18,7 +18,12 @@ void setup() {
   Serial.begin(115200);                 // open serial communication
 
   //_________________Begin - Setup_______________
- 
+  pwm.begin();
+  pwm.setPWMFreq(servo_freq);
+
+  MinPulse = 550;
+  MaxPulse = 2400;
+  secondStep = (2400 - 550)/150;
   //_________________End - Setup_______________
 
 }
@@ -35,13 +40,21 @@ void loop() {
     // If "a" is received reset the servo to its starting position.
     
     //_________________Begin - Reset_______________
- 
+    if (serialVariable == 'a') {
+  exactPos = 550;
+    pwm.writeMicroseconds(servo_num, 550);
+    }
+  
     //_________________End - Reset_______________
 
 
     // If "b" is received move the motor by one step.
     
     //_________________Begin - Advance_______________
+    if (serialVariable == 'b') {
+  exactPos += secondStep;
+    pwm.writeMicroseconds(servo_num, (int) exactPos);
+    }
  
     //_________________End - Advance_______________
 
