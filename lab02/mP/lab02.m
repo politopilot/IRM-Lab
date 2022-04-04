@@ -68,16 +68,15 @@ xfit = 14:2:40;
 xfit_lin = 1./xfit.^n;
 yfit_lin = f_lin(parameter, xfit_lin);
 
-plot(xfit_lin,yfit_lin,'r','linewidth',2); % plot of data and fit for linear case i.e. when 1/z^n
-hold off
+% plot(xfit_lin,yfit_lin,'r','linewidth',2); % plot of data and fit for linear case i.e. when 1/z^n
+% hold off
 
 % plots with x = z
 figure
 plot(x,y,'b*');
 hold on
-yfit = parameter(1)*1000*0.5*f(xfit); % *1000 as we want it in mT, but values are veeery small, try multiplying with 100000000
+yfit = parameter(1)*f(xfit); % *1000 as we want it in mT, but values are veeery small, try multiplying with 100000000
 plot(xfit,yfit,'r','linewidth',2);
-
 
 function y = f(x)
     D = 0.01;
