@@ -63,20 +63,20 @@ xfit = 0.016:0.002:0.040; % in m
 xfit_lin = 1./xfit.^n;
 yfit_lin = f_lin(parameter, xfit_lin);
 
-% plot(xfit_lin,yfit_lin,'r','linewidth',2); % plot of data and fit for linear case i.e. when 1/z^n
-% hold off
+plot(xfit_lin,yfit_lin,'r','linewidth',2); % plot of data and fit for linear case i.e. when 1/z^n
+hold off
 
 Br = lsqcurvefit(@f, 0, x, y); 
   
 figure
 plot(x,y,'b*');
 hold on
-yfit = parameter(1)*f(xfit); % *1000 as we want it in mT, but values are veeery small, try multiplying with 100000000
+yfit = f(Br,xfit); 
 plot(xfit,yfit,'r','linewidth',2);
 xlabel('z (m)');
 ylabel('magnetic field (mT)')
 
-function y = f(x)
+function y = f(Br, x) % x in m
     D = 0.01;
     R = 0.02;
     y1 = ( (D+x)./sqrt(R^2+(D+x).^2) );

@@ -76,7 +76,7 @@ void loop() {
     //delayMicroseconds(203); // 40Hz
     //delayMicroseconds(133); // 60Hz
     //delayMicroseconds(99); // 80Hz
-    delayMicroseconds(77); // 100Hz
+    //delayMicroseconds(77); // 100Hz
     //delayMicroseconds(36); //200Hz
   }
 }
